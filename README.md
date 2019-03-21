@@ -8,7 +8,26 @@ Basic workflow:
 
 1. `conda update conda` and `conda install conda-build` (in base/default environment - conda-build uses the base environment for everything anyway).
 
-1. Create and activate the `build` environment (we'll need `twine` for pypi uploading)
+1. Create and activate the `build` environment (we'll need `twine` for pypi uploading, and `pytest` for sanity checking)
+
+1. `python setup.py test`
+
+This runs unit tests from the yet-not-installed source. This works because deep inside `setuptools` we find:
+
+```
+  with self.project_on_sys_path():
+    self.run_tests()
+```
+
+1. Install (source) distribution
+
+`python setup.py install`
+
+1. Run tests against the *installed* package.
+
+`pytest`
+
+This works because `pytest` runs tests in the `tests` folder, but is unable to import our library from the current folder (since it's inside a `src` folder), so is forced to get it from the installed location.
 
 1. `python setup.py sdist bdist_wheel`
 
@@ -22,9 +41,22 @@ Basic workflow:
    
    `conda activate layla_deploy`
 
-   `pip install -i https://test.pypi.org/simple/ layla`
+   `pip install -i https://test.pypi.org/simple/ layla --no-cache-dir`
 
-Check to make sure it works. If everything looks good, continue.
+This *should* fail, because our package dependes on importlib_resources>=1.0.2, which is not available on Test PyPI (but *is* available on the main PyPI index). So let's install that first and attempt again:
+
+`pip install importlib_resources>=1.0.2`
+
+`pip install -i https://test.pypi.org/simple/ layla --no-cache-dir`
+
+Now, the following should work in the currently active environment:
+
+```
+from layla.mysubmodule import greeting
+greeting()
+```
+
+However, pip prefers binary distributions that we have do have. By design we include unit tests only in the source distribution. Can we force pip to install the source distribution?
 
 4.Upload pip installable package on PyPi
 
