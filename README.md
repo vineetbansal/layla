@@ -59,4 +59,14 @@ This *should* fail, because importib_resources>=1.0.2 is not available on Anacon
 1. Create and activate a barebones `deploy` environment. Install our package in it
    `conda install -c vineetbansal layla`
    
-1. Why didn't it complain about importlib_resources ??
+  Again, this complains:
+  ```
+  PackagesNotFoundError: The following packages are not available from current channels:
+
+  - layla -> importlib_resources[version='>=1.0.2']
+  ```
+   
+  As package authors, we shouldn't assume the responsibility of installing dependencies from non-standard (yes, even `conda-forge`) locations. All we do is specify that we need this particular package, but don't enforce where one gets it from. But we can, and should, document this dependency in the project README.
+  
+  At this point, the user can manually do:
+  `conda install -c vineetbansal -c conda-forge layla`
