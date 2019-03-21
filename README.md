@@ -4,11 +4,34 @@ Boilerplate for a starter Python package meant to go on PyPI or Anaconda Cloud
 
 The source is heavily commented to point out certain concepts.
 
-Basic workflow:
+# Basic workflow:
+
+## Testing and building (and re-testing)
 
 1. `conda update conda` and `conda install conda-build` (in base/default environment - conda-build uses the base environment for everything anyway).
 
-1. Create and activate the `build` environment (we'll need `twine` for pypi uploading)
+1. Create and activate the `build` environment (we'll need `twine` for pypi uploading, and `pytest` for sanity checking)
+
+1. `python setup.py test`
+
+This runs unit tests from the yet-not-installed source. This works because deep inside `setuptools` we find:
+
+```
+  with self.project_on_sys_path():
+    self.run_tests()
+```
+
+1. Install (source) distribution
+
+`python setup.py install`
+
+1. Run tests against the *installed* package.
+
+`pytest`
+
+This works because `pytest` runs tests in the `tests` folder, but is unable to import our library from the current folder (since it's inside a `src` folder), so is forced to get it from the installed location.
+
+## Uploading to PyPI
 
 1. `python setup.py sdist bdist_wheel`
 
@@ -22,15 +45,20 @@ Basic workflow:
    
    `conda activate layla_deploy`
 
-   `pip install -i https://test.pypi.org/simple/ layla`
+   `pip install -i https://test.pypi.org/simple/ layla --no-cache-dir`
 
-Check to make sure it works. If everything looks good, continue.
+This *should* fail, because our package dependes on importlib_resources>=1.0.2, which is not available on Test PyPI (but *is* available on the main PyPI index). So let's install that first and attempt again:
 
-4.Upload pip installable package on PyPi
+`pip install importlib_resources>=1.0.2`
+
+`pip install -i https://test.pypi.org/simple/ layla --no-cache-dir`
+
+
+4. If the above cycle worked, upload the package on PyPi
 
 `python -m twine upload dist/*`
 
-## Conda package upload
+## Uploading to Anaconda
 
 1. Update meta.yaml with latest version.
 
