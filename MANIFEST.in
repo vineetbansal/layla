@@ -1,2 +1,2 @@
-include layla/data/greeting.txt
-recursive-include tests *
+graft src
+recursive-include tests *.py
