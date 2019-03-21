@@ -15,16 +15,18 @@ setup(
         'layla.data': ['*.txt']
     },
 
+    # Should setuptools consult the MANIFEST.in file to see what else needs to be included?
+    # Again, this has nothing to do with how we would go about loading it in our code
+    # (which is tricky if it cannot be reached through the python package loading mechanism - since the whole
+    # source folder might be zipped up, we cannot rely on os.path etc. mechanisms)
+    include_package_data=True,
+
     # What does the project *minimally* need to run correctly?
 
     # Notes
     # -----
     # Whereas install_requires requirements are minimal, requirements files often contain an exhaustive listing of
     # pinned versions for the purpose of achieving repeatable installations of a complete environment.
-
-    # Whereas install_requires requirements are “Abstract”, i.e. not associated with any particular index,
-    # requirements files often contain pip options like --index-url or --find-links to make requirements “Concrete”,
-    # i.e. associated with a particular index or directory of packages
 
     install_requires=[
         'importlib_resources>=1.0.2'

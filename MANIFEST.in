@@ -1,0 +1,2 @@
+include layla/data/greeting.txt
+recursive-include tests *
