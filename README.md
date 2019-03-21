@@ -4,7 +4,9 @@ Boilerplate for a starter Python package meant to go on PyPI or Anaconda Cloud
 
 The source is heavily commented to point out certain concepts.
 
-Basic workflow:
+# Basic workflow:
+
+## Testing and building (and re-testing)
 
 1. `conda update conda` and `conda install conda-build` (in base/default environment - conda-build uses the base environment for everything anyway).
 
@@ -29,6 +31,8 @@ This runs unit tests from the yet-not-installed source. This works because deep 
 
 This works because `pytest` runs tests in the `tests` folder, but is unable to import our library from the current folder (since it's inside a `src` folder), so is forced to get it from the installed location.
 
+## Uploading to PyPI
+
 1. `python setup.py sdist bdist_wheel`
 
 2. Upload pip installable package on Test PyPi
@@ -49,20 +53,12 @@ This *should* fail, because our package dependes on importlib_resources>=1.0.2, 
 
 `pip install -i https://test.pypi.org/simple/ layla --no-cache-dir`
 
-Now, the following should work in the currently active environment:
 
-```
-from layla.mysubmodule import greeting
-greeting()
-```
-
-However, pip prefers binary distributions that we have do have. By design we include unit tests only in the source distribution. Can we force pip to install the source distribution?
-
-4.Upload pip installable package on PyPi
+4. If the above cycle worked, upload the package on PyPi
 
 `python -m twine upload dist/*`
 
-## Conda package upload
+## Uploading to Anaconda
 
 1. Update meta.yaml with latest version.
 
