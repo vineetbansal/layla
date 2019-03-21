@@ -2,9 +2,8 @@
 
 Boilerplate for a starter Python package meant to go on PyPI or Anaconda Cloud
 
-The source is heavily commented to point out certain concepts.
+`setup.py` is heavily commented to point out certain key concepts.
 
-# Basic workflow:
 
 ## Testing and building (and re-testing)
 
@@ -14,20 +13,20 @@ The source is heavily commented to point out certain concepts.
 
 1. `python setup.py test`
 
-This runs unit tests from the yet-not-installed source. This works because deep inside `setuptools` we find:
+  This runs unit tests from the yet-not-installed source. This works because deep inside `setuptools` we find:
 
-```
-  with self.project_on_sys_path():
-    self.run_tests()
-```
+    ```
+      with self.project_on_sys_path():
+        self.run_tests()
+    ```
 
 1. Install (source) distribution
 
-`python setup.py install`
+  `python setup.py install`
 
 1. Run tests against the *installed* package.
 
-`pytest`
+  `pytest`
 
 This works because `pytest` runs tests in the `tests` folder, but is unable to import our library from the current folder (since it's inside a `src` folder), so is forced to get it from the installed location.
 
@@ -37,7 +36,7 @@ This works because `pytest` runs tests in the `tests` folder, but is unable to i
 
 2. Upload pip installable package on Test PyPi
 
-`python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
+  `python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
 
 3. Create and activate a barebones `deploy` environment.
 
