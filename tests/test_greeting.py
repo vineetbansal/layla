@@ -1,5 +1,5 @@
 from unittest import TestCase
-from mypack.mysubmodule import greeting
+from layla.mysubmodule import greeting
 
 
 class GreetingTestCase(TestCase):

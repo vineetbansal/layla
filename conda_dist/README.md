@@ -1,0 +1,1 @@
+This is where the output files of `conda-build` appear for us to inspect.
