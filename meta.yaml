@@ -1,0 +1,38 @@
+{% set version = "0.1.3" %}
+
+package:
+  name: vineetb-mypack
+  version: {{ version }}
+
+source:
+  url: https://test-files.pythonhosted.org/packages/77/ca/c0fd43f309027a81e8b4f6756797716571157988feb89bfe054516d44a66/vineetb_mypack-{{ version }}.tar.gz
+  sha256: 3e933dd874b216d40cf01fcf1905836f8c7dc15f20b2a80e023b59f08857b688
+
+extra:
+  channels:
+    - conda-forge
+
+build:
+  noarch: python
+  number: 0
+  script:
+    - python -m pip install --no-deps --ignore-installed .
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - importlib_resources>=1.0.2
+
+test:
+  imports:
+    - mypack
+
+about:
+  home: https://github.com/vineetbansal/vineetb_mypack
+  license: MIT
+  summary: 'A package to demonstrate packaging'
+  description: |
+    A sample package to test out the packaging and deployment cycle.
