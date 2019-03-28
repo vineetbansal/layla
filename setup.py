@@ -1,9 +1,9 @@
-from setuptools import setup, find_namespace_packages
+from setuptools import setup, find_namespace_packages, Extension
 
 
 setup(
     name="layla",
-    version="0.1.4",
+    version="0.1.5",
 
     package_dir={'': 'src'},
 
@@ -33,6 +33,15 @@ setup(
 
     # For this to work without a lot of fuss, make sure that 'tests' is a package by including an __init__.py
     test_suite='tests',
+
+    # C extensions as submodules of the main package
+    ext_modules=[
+        Extension(
+            'layla.mycmodule',
+            sources=['src/cpp/c_extension.cpp'],
+        )
+    ],
+
 )
 
 
