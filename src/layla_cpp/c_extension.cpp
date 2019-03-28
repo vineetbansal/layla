@@ -3,49 +3,47 @@
 #include <iostream>
 #include "MathLibrary.h"
 
-static PyObject *sq(PyObject *self, PyObject *args) {
-  int input;
-  if (!PyArg_ParseTuple(args, "i", &input)) {
+static PyObject *pyfibonacci_init(PyObject *self, PyObject *args) {
+  int first, second;
+  if (!PyArg_ParseTuple(args, "ii", &first, &second)) {
     return NULL;
+  } else {
+    fibonacci_init(first, second);
   }
 
-  return PyLong_FromLong((long)input * (long)input);
+  return Py_None;
 }
 
-static PyObject *blah(PyObject *self, PyObject *args) {
-	// Initialize a Fibonacci relation sequence.
-	fibonacci_init(1, 1);
-	// Write out the sequence values until overflow.
-	do {
-		std::cout << fibonacci_index() << ": "
-			<< fibonacci_current() << std::endl;
-	} while (fibonacci_next());
-	// Report count of values written before overflow.
-	std::cout << fibonacci_index() + 1 <<
-		" Fibonacci sequence values fit in an " <<
-		"unsigned 64-bit integer." << std::endl;
-
-	return Py_None;
+static PyObject *pyfibonacci_next(PyObject *self, PyObject *args) {
+  bool b = fibonacci_next();
+  return Py_None;
 }
 
-static PyMethodDef example_methods[] = {
-    {"square", sq, METH_VARARGS, "Returns a square of an integer."},
-    {"blah", blah, METH_VARARGS, "Runs fibonacci stuff in a loop."},
+static PyObject *pyfibonacci_current(PyObject *self, PyObject *args) {
+  int current = fibonacci_current();
+  return PyLong_FromLong((long)current);
+}
+
+static PyMethodDef methods[] = {
+    {"fibonacci_init", pyfibonacci_init, METH_VARARGS, "Runs fibonacci initializer"},
+    {"fibonacci_next", pyfibonacci_next, METH_VARARGS, "Moves the fibonacci sequence ahead by one"},
+    {"fibonacci_current", pyfibonacci_current, METH_VARARGS, "Returns current fibonacci number"},
     {NULL, NULL, 0, NULL}
 };
 
-static struct PyModuleDef example_definition = {
+
+static struct PyModuleDef definition = {
     PyModuleDef_HEAD_INIT,
     "example",
-    "A Python module containing a square() function",
+    "A Python module for a fibonacci library",
     -1,
-    example_methods
+    methods
 };
 
 // The name of the function here should PyInit_<x> where <x> is the module/submodule name in setup.py
 PyMODINIT_FUNC PyInit_mycmodule(void) {
   Py_Initialize();
-  PyObject *m = PyModule_Create(&example_definition);
+  PyObject *m = PyModule_Create(&definition);
 
   return m;
 }
