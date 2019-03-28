@@ -14,7 +14,8 @@ install:
   - conda info -a
   - "conda create -n test-environment python=%PYTHON_VERSION%"
   - activate test-environment
-  - pip install .
+  - python setup.py build --compiler=mingw32
+  - python setup.py install
   
 test_script:
   - pytest
