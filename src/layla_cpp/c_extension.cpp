@@ -1,4 +1,7 @@
 #include <Python.h>
+#include "pch.h"
+#include <iostream>
+#include "MathLibrary.h"
 
 static PyObject *sq(PyObject *self, PyObject *args) {
   int input;
@@ -9,8 +12,25 @@ static PyObject *sq(PyObject *self, PyObject *args) {
   return PyLong_FromLong((long)input * (long)input);
 }
 
+static PyObject *blah(PyObject *self, PyObject *args) {
+	// Initialize a Fibonacci relation sequence.
+	fibonacci_init(1, 1);
+	// Write out the sequence values until overflow.
+	do {
+		std::cout << fibonacci_index() << ": "
+			<< fibonacci_current() << std::endl;
+	} while (fibonacci_next());
+	// Report count of values written before overflow.
+	std::cout << fibonacci_index() + 1 <<
+		" Fibonacci sequence values fit in an " <<
+		"unsigned 64-bit integer." << std::endl;
+
+	return Py_None;
+}
+
 static PyMethodDef example_methods[] = {
     {"square", sq, METH_VARARGS, "Returns a square of an integer."},
+    {"blah", blah, METH_VARARGS, "Runs fibonacci stuff in a loop."},
     {NULL, NULL, 0, NULL}
 };
 

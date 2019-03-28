@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages, Extension
 
 setup(
     name="layla",
-    version="0.1.5",
+    version="0.2.5",
 
     package_dir={'': 'src'},
 
@@ -38,9 +38,14 @@ setup(
     ext_modules=[
         Extension(
             'layla.mycmodule',
-            sources=['src/cpp/c_extension.cpp'],
+            sources=['src/layla_cpp/c_extension.cpp'],
+            include_dirs=['src/layla_cpp/include'],
+            library_dirs=['src/layla_cpp/lib'],
+            libraries=['MathLibrary'],
         )
     ],
+
+    zip_safe=False
 
 )
 
