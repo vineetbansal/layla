@@ -1,8 +1,6 @@
 pip uninstall -y layla
 
-rmdir dist /s /q
-rmdir build /s /q
-rmdir layla/src/layla.egg-info /s /q
+git clean -f -d
 
 python setup.py build --compiler=mingw32
 python setup.py install
