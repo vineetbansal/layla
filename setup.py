@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages, Extension
 
 setup(
     name="layla",
-    version="0.4.4",
+    version="0.5.0",
 
     package_dir={'': 'src'},
 
