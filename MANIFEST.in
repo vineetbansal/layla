@@ -1,5 +1,0 @@
-graft src
-recursive-include tests *.py
-recursive-exclude * __pycache__
-exclude src/layla_cpp/lib/*
-include src/layla/*.dll
