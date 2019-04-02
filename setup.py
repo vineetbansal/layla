@@ -38,9 +38,9 @@ setup(
     ext_modules=[
         Extension(
             'layla.mycmodule',
-            sources=['src/layla_cpp/c_extension.cpp'],
-            include_dirs=['src/layla_cpp/include'],
-            library_dirs=['src/layla_cpp/lib'],
+            sources=['_cextension/c_extension.cpp'],
+            include_dirs=['_cextension/include'],
+            library_dirs=['_cextension/lib'],
             libraries=['example_dll'],
             extra_compile_args=['-D_hypot=hypot', '-DMS_WIN64']
         )
