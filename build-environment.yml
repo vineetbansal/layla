@@ -5,6 +5,9 @@ channels:
   - conda-forge
 
 dependencies:
+  - libpython
+  - m2w64-toolchain
+  - pip
   - python=3.6
   - pip:
     - importlib_resources>=1.0.2

@@ -14,4 +14,4 @@ python -c "from layla.mycmodule import Double; print(Double(21))"
 
 python setup.py sdist
 call conda deactivate
-call conda env --remove --name layla_build
+call conda env remove --name layla_build
