@@ -9,6 +9,14 @@ Boilerplate for a starter Python package meant to go on PyPI or Anaconda Cloud
 
 1. `conda update conda` and `conda install conda-build` (in base/default environment - conda-build uses the base environment for everything anyway).
 
+1. In the base environment, make sure that `libpython` is installed.
+
+1. In the base environment, whereever `sys.path` gets the `distutils` package, create/update the `distutils.cfg` file to have a section that picks up `mingw32 as our default compiler:
+
+```
+[build]           
+compiler=mingw32 
+```
 1. Create and activate the `build` environment (we'll need `twine` for pypi uploading, and `pytest` for sanity checking)
 
 1. `python setup.py test`
