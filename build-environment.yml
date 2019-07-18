@@ -1,0 +1,10 @@
+name: 'layla_build'
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - python=3.6
+  - pip:
+    - importlib_resources>=1.0.2

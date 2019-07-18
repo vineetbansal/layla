@@ -1,3 +1,4 @@
+call conda env create -f build-environment.yml
 call conda activate layla_build
 
 pip uninstall -y layla
@@ -13,3 +14,4 @@ python -c "from layla.mycmodule import Double; print(Double(21))"
 
 python setup.py sdist
 call conda deactivate
+call conda env --remove --name layla_build
