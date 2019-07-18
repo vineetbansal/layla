@@ -1,3 +1,5 @@
+call conda activate layla_build
+
 pip uninstall -y layla
 
 git clean -f -d
@@ -8,3 +10,6 @@ python setup.py install
 
 python -c "import layla; print(layla.__file__); print(layla.__version__)"
 python -c "from layla.mycmodule import Double; print(Double(21))"
+
+python setup.py sdist
+call conda deactivate
